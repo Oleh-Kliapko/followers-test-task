@@ -7,7 +7,7 @@ export const TweetsList = ({ tweets }) => {
   const location = useLocation();
 
   return (
-    <section className="flex flex-wrap gap-4 mt-4 px-28">
+    <section className="flex flex-wrap gap-12 mt-8 justify-center">
       {tweets.map(item => {
         return <TweetCard key={item.id} item={item} />;
       })}

@@ -8,6 +8,7 @@ export const theme = {
     secondBg: '#5CD3A8',
     prime: '#EBD8FF',
     second: '#373737',
+    hoverBackground: 'rgb(240, 171, 252)',
   },
   shadows: {
     prime: '-2.5777px 6.87386px 20.6216px rgba(0, 0, 0, 0.23)',
