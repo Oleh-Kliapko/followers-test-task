@@ -1,4 +1,4 @@
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 
 import { TweetsList } from '@/components/TweetsList';
 import { Loader } from '@/services';
@@ -9,19 +9,25 @@ export const Tweets = () => {
     JSON.parse(localStorage.getItem('tweets')) || null
   );
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const allTweets = API.fetchTweets();
-    allTweets
-      .then(res => {
+    const fetchTweets = async () => {
+      try {
+        const res = await API.fetchTweets();
         setTweets(res);
         localStorage.setItem('tweets', JSON.stringify(res));
-      })
-      .catch(error => console.log(error));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTweets();
   }, []);
 
   return (
-    <Suspense fallback={<Loader />}>
-      {tweets && <TweetsList tweets={tweets} />}
-    </Suspense>
+    <div>{loading ? <Loader /> : tweets && <TweetsList tweets={tweets} />}</div>
   );
 };
