@@ -1,14 +1,14 @@
-import { Suspense } from 'react';
+import React from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 
-import { Loader, theme } from '@/services';
+import { theme } from '@/utils';
 
 export const NavBar = () => {
   const location = useLocation();
 
   return (
     <>
-      <header className="sticky top-0 left-0 z-10 flex items-center justify-between py-4 px-24 w-screen bg-navBarBg drop-shadow-xl">
+      <header className="sticky top-0 left-0 z-20 flex items-center justify-between py-4 px-24 w-screen bg-navBarBg drop-shadow-xl">
         <NavLink
           className="text-lg block no-underline font-sans font-semibold"
           style={{
@@ -38,9 +38,7 @@ export const NavBar = () => {
           Tweets
         </NavLink>
       </header>
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </>
   );
 };

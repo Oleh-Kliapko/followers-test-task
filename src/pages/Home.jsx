@@ -1,3 +1,5 @@
+import React from 'react';
+
 import homeImage from '@/images/followers.png';
 
 export const Home = () => {

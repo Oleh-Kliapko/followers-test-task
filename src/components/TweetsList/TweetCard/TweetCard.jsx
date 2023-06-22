@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { theme, formatNumber } from '../../../services';
+import { theme, formatNumber } from '@/utils';
 import logo from '@/images/logo.png';
 import mainPicture from '@/images/main.png';
+import defaultPhoto from '@/images/boy.png';
 
 export const TweetCard = ({ item }) => {
   const { avatar, user, tweets, followers } = item;
@@ -36,12 +37,18 @@ export const TweetCard = ({ item }) => {
         alt="Main picture"
       />
       <div className="h-2 w-[100%] absolute top-[214px] bg-prime drop-shadow-secondary"></div>
-      <div className="w-[80px] h-[80px] border-8 rounded-full overflow-hidden z-10 drop-shadow-secondary border-prime">
-        <img className="w-full h-full object-cover" src={avatar} alt={user} />
+      <div className="w-[80px] h-[80px] border-8 rounded-full overflow-hidden z-10 border-prime drop-shadow-secondary">
+        <img
+          className="w-full h-full object-cover"
+          src={avatar ? avatar : defaultPhoto}
+          alt={user}
+        />
       </div>
       <div className="py-7 flex flex-col items-center font-sans font-medium text-prime">
         <p className="m-0 mb-4 p-0">{formatNumber(tweets)} TWEETS</p>
-        <p className="m-0 p-0">{formatNumber(followers)} FOLLOWERS</p>
+        <p className="m-0 p-0">
+          {formatNumber(following ? followers + 1 : followers)} FOLLOWERS
+        </p>
       </div>
       <button
         className="w-[196px] h-[50px] rounded-lg font-sans font-semibold drop-shadow-button"
@@ -59,7 +66,7 @@ export const TweetCard = ({ item }) => {
 
 TweetCard.propTypes = {
   item: PropTypes.shape({
-    avatar: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
     user: PropTypes.string.isRequired,
     tweets: PropTypes.number.isRequired,
     followers: PropTypes.number.isRequired,

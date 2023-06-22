@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 
 import { TweetCard } from './TweetCard';
 
 export const TweetsList = ({ tweets }) => {
-  const location = useLocation();
-
   return (
     <section className="flex flex-wrap gap-12 mt-8 justify-center">
       {tweets.map(item => {
