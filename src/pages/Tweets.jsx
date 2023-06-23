@@ -7,11 +7,11 @@ import { Error, Loader, NoTweets } from '@/utils';
 import { API } from '@/services';
 
 const PER_PAGE = 3;
+let countPages = 0;
 
 export const Tweets = () => {
   const [tweets, setTweets] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const [filter, setFilter] = useState('show all');
 
   const [visibleBtn, setVisibleBtn] = useState(false);
@@ -25,17 +25,17 @@ export const Tweets = () => {
       try {
         setLoading(true);
         const fetchedTweets = await API.fetchTweets(page);
-        const countTweets = await API.fetchTotalTweets();
 
         if (page === 1) {
           setTweets(fetchedTweets);
-          toast.success(`Hooray! ${countTweets} tweets were downloaded`);
+          const countTweets = await API.fetchTotalTweets();
+          countPages = Math.ceil(countTweets / PER_PAGE);
+          toast.success(
+            `Hooray! ${countTweets} tweets were downloaded. New tweets will be displayed on top!`
+          );
         } else {
           setTweets(prevTweets => [...fetchedTweets, ...prevTweets]);
         }
-
-        const countPages = Math.ceil(countTweets / PER_PAGE);
-        setTotalPages(countPages);
 
         if (page >= countPages) {
           setVisibleBtn(false);
