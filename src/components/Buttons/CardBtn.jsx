@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { theme } from '@/utils';
+import { theme, styles } from '@/utils';
 
 export const CardBtn = ({ handleFollowClick, following }) => {
   return (
     <button
-      className="w-[196px] h-[50px] rounded-lg font-sans font-semibold drop-shadow-button"
+      className={styles.buttonTweet}
       style={{
         background: following ? theme.colors.secondBg : theme.colors.prime,
       }}

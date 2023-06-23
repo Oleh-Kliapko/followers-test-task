@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 import { TweetsList } from '@/components/TweetsList';
 import { LoadMoreBtn, Dropdown, GoBackBtn } from '@/components/Buttons';
@@ -24,19 +25,21 @@ export const Tweets = () => {
       try {
         setLoading(true);
         const fetchedTweets = await API.fetchTweets(page);
+        const countTweets = await API.fetchTotalTweets();
 
         if (page === 1) {
           setTweets(fetchedTweets);
+          toast.success(`Hooray! ${countTweets} tweets were downloaded`);
         } else {
           setTweets(prevTweets => [...fetchedTweets, ...prevTweets]);
         }
 
-        const countTweets = await API.fetchTotalTweets();
         const countPages = Math.ceil(countTweets / PER_PAGE);
         setTotalPages(countPages);
 
         if (page >= countPages) {
           setVisibleBtn(false);
+          toast.info('You have reached the end of tweets. Thanks for watching');
         } else {
           setVisibleBtn(true);
         }
@@ -48,7 +51,7 @@ export const Tweets = () => {
     };
 
     fetchTweets();
-  }, [page, totalPages]);
+  }, [page]);
 
   const handleLoadMore = () => setPage(prevPage => prevPage + 1);
 

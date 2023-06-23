@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 
-import { theme } from '@/utils';
+import { theme, styles } from '@/utils';
 
 export const NavBar = () => {
   const location = useLocation();
@@ -10,7 +10,7 @@ export const NavBar = () => {
     <>
       <header className="sticky top-0 left-0 z-20 flex items-center justify-between py-4 px-24 mb-10 w-screen bg-navBarBg drop-shadow-xl">
         <NavLink
-          className="text-lg block no-underline font-sans font-semibold"
+          className={styles.navBar}
           style={{
             color:
               location.pathname === '/'
@@ -24,7 +24,7 @@ export const NavBar = () => {
           Home
         </NavLink>
         <NavLink
-          className="text-lg block no-underline font-sans font-semibold"
+          className={styles.navBar}
           style={{
             color:
               location.pathname === '/tweets'
