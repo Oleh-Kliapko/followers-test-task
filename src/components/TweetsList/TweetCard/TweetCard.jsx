@@ -2,12 +2,13 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 
 import { theme, formatNumber } from '@/utils';
+import { CardBtn } from '@/components/Buttons';
 import logo from '@/images/logo.png';
 import mainPicture from '@/images/main.png';
 import defaultPhoto from '@/images/boy.png';
 
-export const TweetCard = ({ item }) => {
-  const { avatar, user, tweets, followers } = item;
+export const TweetCard = ({ item, updateTweets }) => {
+  const { id, avatar, user, tweets, followers } = item;
 
   const [following, setFollowing] = useState(
     JSON.parse(localStorage.getItem(`following_${user}`)) || false
@@ -19,6 +20,7 @@ export const TweetCard = ({ item }) => {
 
   const handleFollowClick = () => {
     setFollowing(prevFollowing => !prevFollowing);
+    updateTweets(id);
   };
 
   return (
@@ -50,25 +52,18 @@ export const TweetCard = ({ item }) => {
           {formatNumber(following ? followers + 1 : followers)} FOLLOWERS
         </p>
       </div>
-      <button
-        className="w-[196px] h-[50px] rounded-lg font-sans font-semibold drop-shadow-button"
-        style={{
-          background: following ? theme.colors.secondBg : theme.colors.prime,
-        }}
-        type="button"
-        onClick={handleFollowClick}
-      >
-        {following ? 'FOLLOWING' : 'FOLLOW'}
-      </button>
+      <CardBtn following={following} handleFollowClick={handleFollowClick} />
     </div>
   );
 };
 
 TweetCard.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     avatar: PropTypes.string,
     user: PropTypes.string.isRequired,
     tweets: PropTypes.number.isRequired,
     followers: PropTypes.number.isRequired,
   }).isRequired,
+  updateTweets: PropTypes.func,
 };

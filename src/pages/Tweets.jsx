@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import { TweetsList } from '@/components/TweetsList';
-import { LoadMoreBtn } from '@/components/Buttons';
-import { Error, Loader } from '@/utils';
+import { LoadMoreBtn, Dropdown, GoBackBtn } from '@/components/Buttons';
+import { Error, Loader, NoTweets } from '@/utils';
 import { API } from '@/services';
 
 const PER_PAGE = 3;
@@ -11,6 +11,7 @@ export const Tweets = () => {
   const [tweets, setTweets] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [filter, setFilter] = useState('show all');
 
   const [visibleBtn, setVisibleBtn] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -51,18 +52,23 @@ export const Tweets = () => {
 
   const handleLoadMore = () => setPage(prevPage => prevPage + 1);
 
+  const handleFilterChange = evt => setFilter(evt.target.value);
+
   if (loading) return <Loader />;
 
   if (error) return <Error />;
 
   return (
     <>
+      <GoBackBtn />
       {tweets.length > 0 && (
         <>
+          <Dropdown filter={filter} handleFilterChange={handleFilterChange} />
+          <TweetsList tweets={tweets} filter={filter} />
           {visibleBtn && <LoadMoreBtn handleLoadMore={handleLoadMore} />}
-          <TweetsList tweets={tweets} />
         </>
       )}
+      {tweets.length === 0 && <NoTweets />}
     </>
   );
 };

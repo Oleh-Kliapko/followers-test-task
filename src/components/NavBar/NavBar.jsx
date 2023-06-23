@@ -8,7 +8,7 @@ export const NavBar = () => {
 
   return (
     <>
-      <header className="sticky top-0 left-0 z-20 flex items-center justify-between py-4 px-24 w-screen bg-navBarBg drop-shadow-xl">
+      <header className="sticky top-0 left-0 z-20 flex items-center justify-between py-4 px-24 mb-10 w-screen bg-navBarBg drop-shadow-xl">
         <NavLink
           className="text-lg block no-underline font-sans font-semibold"
           style={{
